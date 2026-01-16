@@ -1,0 +1,26 @@
+name: dash-to-hls
+services:
+  - name: converter
+    type: web
+    ports:
+      - port: 8080
+        http_path: /health
+    docker:
+      image: yourusername/dash-to-hls:latest
+    env:
+      - name: TZ
+        value: UTC
+    resources:
+      instance_types:
+        - micro
+      cpu: [500, 1000]
+      memory: [1024, 2048]
+    scaling:
+      min: 1
+      max: 2
+    healthcheck:
+      http:
+        path: /health
+        port: 8080
+        initial_delay_seconds: 60  # Give time for FFmpeg to start
+        period_seconds: 30
