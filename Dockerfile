@@ -1,6 +1,6 @@
 FROM alpine:latest
 
-# تثبيت Nginx + FFmpeg + Python
+# تثبيت Nginx + FFmpeg + Python مع حزم apk
 RUN apk update && apk add --no-cache \
     nginx \
     ffmpeg \
@@ -8,10 +8,10 @@ RUN apk update && apk add --no-cache \
     py3-pip \
     curl \
     openssl \
+    # إضافة حزم Python عبر apk
+    py3-flask \
+    py3-requests \
     && rm -rf /var/cache/apk/*
-
-# تثبيت مكتبات Python
-RUN pip3 install flask requests
 
 # إنشاء مجلدات
 RUN mkdir -p /tmp/hls /tmp/dash /var/log/nginx /app
